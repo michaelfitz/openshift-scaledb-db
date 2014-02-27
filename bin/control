@@ -6,7 +6,7 @@ export STOPTIMEOUT=10
 
 # Run mariadb commands
 function run_sql {
-  echo "$@" | /usr/bin/mysql -h $OPENSHIFT_MARIADB_DB_HOST -P $OPENSHIFT_MARIADB_DB_PORT -u $OPENSHIFT_MARIADB_DB_USERNAME --password="$OPENSHIFT_MARIADB_DB_PASSWORD" --skip-column-names
+  echo "$@" | $OPENSHIFT_MARIADB_DIR/bin/mysql -h $OPENSHIFT_MARIADB_DB_HOST -P $OPENSHIFT_MARIADB_DB_PORT -u $OPENSHIFT_MARIADB_DB_USERNAME --password="$OPENSHIFT_MARIADB_DB_PASSWORD" --skip-column-names
 }
 
 function is_running {
@@ -32,7 +32,7 @@ function start {
   if ! is_running; then
     echo "Starting MySQL cartridge"
     erb conf/my.cnf.erb.hidden > conf/my.cnf
-    /usr/bin/mysqld_safe --defaults-file=$OPENSHIFT_MARIADB_DIR/conf/my.cnf > /dev/null 2>&1 &
+$OPENSHIFT_MARIADB_DIR/bin/mysqld_safe --defaults-file=$OPENSHIFT_MARIADB_DIR/conf/my.cnf > /dev/null 2>&1 &
     wait_for_mysqld_availability
   else
     echo "MySQL already running" 1>&2
