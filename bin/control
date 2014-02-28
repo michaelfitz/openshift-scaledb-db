@@ -29,14 +29,14 @@ function is_running {
 # TODO: source user hooks?
 # Start mysqld and block until it comes up.
 function start {
-  if ! is_running; then
-    echo "Starting MySQL cartridge"
-    erb conf/my.cnf.erb.hidden > conf/my.cnf
-$OPENSHIFT_MARIADB_DIR/bin/mysqld_safe --defaults-file=$OPENSHIFT_MARIADB_DIR/conf/my.cnf > /dev/null 2>&1 &
-    wait_for_mysqld_availability
-  else
-    echo "MySQL already running" 1>&2
-  fi
+#  if ! is_running; then
+    echo "Starting MySQL-scaledb cartridge"
+#    erb conf/my.cnf.erb.hidden > conf/my.cnf
+# $OPENSHIFT_MARIADB_DIR/bin/mysqld_safe --defaults-file=$OPENSHIFT_MARIADB_DIR/conf/my.cnf > /dev/null 2>&1 &
+#    wait_for_mysqld_availability
+#  else
+#    echo "MySQL already running" 1>&2
+#  fi
 }
 
 function wait_for_mysqld_availability {
